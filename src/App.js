@@ -1,25 +1,37 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter as Router, Route, Routes, Link, useLocation } from 'react-router-dom';
+import LoginPage from './login/LoginPage';
+import HomePage from './home/HomePage';
+import { AnimatePresence } from 'framer-motion';
+
+function AnimatedRoutes() {
+  const location = useLocation()
+  return (
+    <div>
+        <AnimatePresence mode='wait'>
+          <Routes location={location} key={location.pathname}>
+            <Route index element={<LoginPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/home' element={<HomePage />} />
+          </Routes>
+        </AnimatePresence>
+      
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+       <nav>
+          <Link to={"/login"}>Login</Link>
+          ----------
+          <Link to={"/home"}>Home</Link>
+        </nav>
+      <AnimatedRoutes />
+    </Router>
+  )
 }
 
 export default App;
